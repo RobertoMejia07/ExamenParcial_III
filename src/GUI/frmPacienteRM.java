@@ -3,23 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+
 import DAO.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.sql.*;
+
 /**
  *
  * @author rober
  */
-public class fmrMedicoRM extends javax.swing.JFrame {
+public class frmPacienteRM extends javax.swing.JFrame {
 
     /**
-     * Creates new form fmrMedicoRM
+     * Creates new form frmPacienteRM
      */
-    public fmrMedicoRM() {
+    public frmPacienteRM() {
         initComponents();
     }
 
-    public void Insertar_Medico(){
+    public void Insertar_Paciente(){
     Conexion conn = new Conexion("consultamedicarm");
     Connection con = null;
     PreparedStatement ps = null;
@@ -29,8 +33,8 @@ public class fmrMedicoRM extends javax.swing.JFrame {
         String name =  txtNombreRM.getText();
         int age = Integer.parseInt(txtEdadRM.getText());
         String address = txtDireccionRM.getText();
-        String specialty = txtEspecialidadRM.getText();
-        int exp = Integer.parseInt(txtExperienciaRM.getText());
+        int record = Integer.parseInt(txtHistorialRM.getText());
+        String disease = txtEnfermedadRM.getText();
         
 
         if (name.isEmpty() || address.isEmpty()) {
@@ -39,14 +43,14 @@ public class fmrMedicoRM extends javax.swing.JFrame {
         }
 
         con = conn.getConexion();
-        String sql = "INSERT INTO medicorm (Nombre, Edad, Direccion, Especialidad, Anio_Exp) VALUES (?, ?, ?,?,?)";
+        String sql = "INSERT INTO pacienterm (Nombre, Edad, Direccion, nmrHistorial, Enfermedad) VALUES (?, ?, ?,?,?)";
         ps = con.prepareStatement(sql);
 
         ps.setString(1, name);   
         ps.setInt(2, age);       
         ps.setString(3, address); 
-        ps.setString(4, specialty);
-        ps.setInt(5, exp);
+        ps.setInt(4, record);
+        ps.setString(5,disease);
 
         int rowsInserted = ps.executeUpdate();
 
@@ -71,8 +75,6 @@ public class fmrMedicoRM extends javax.swing.JFrame {
     }
     
 }
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,8 +84,6 @@ public class fmrMedicoRM extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreRM = new javax.swing.JTextField();
@@ -92,23 +92,16 @@ public class fmrMedicoRM extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtDireccionRM = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtEspecialidadRM = new javax.swing.JTextField();
+        txtHistorialRM = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtExperienciaRM = new javax.swing.JTextField();
+        txtEnfermedadRM = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnMostrar = new javax.swing.JButton();
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Registro de Medicos");
+        setTitle("Registro de Pacientes ");
 
-        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 102));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,11 +117,11 @@ public class fmrMedicoRM extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Especialidad");
+        jLabel4.setText("Historial");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Experiencia");
+        jLabel5.setText("Enfermedad");
 
         btnGuardar.setBackground(new java.awt.Color(204, 204, 255));
         btnGuardar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -177,9 +170,9 @@ public class fmrMedicoRM extends javax.swing.JFrame {
                             .addComponent(txtNombreRM)
                             .addComponent(txtEdadRM)
                             .addComponent(txtDireccionRM)
-                            .addComponent(txtEspecialidadRM)
-                            .addComponent(txtExperienciaRM))))
-                .addContainerGap(88, Short.MAX_VALUE))
+                            .addComponent(txtHistorialRM)
+                            .addComponent(txtEnfermedadRM))))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,41 +193,48 @@ public class fmrMedicoRM extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtEspecialidadRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHistorialRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtExperienciaRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnfermedadRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnMostrar))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    Insertar_Medico();            // TODO add your handling code here:
+       Insertar_Paciente();
+        
+    // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
-    frmMostrarMedico open = new frmMostrarMedico();
-    open.setVisible(true);
-    this.dispose();// TODO add your handling code here:
+        frmMostrarPacienteRM open = new frmMostrarPacienteRM();
+        open.setVisible(true);
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     /**
@@ -254,20 +254,20 @@ public class fmrMedicoRM extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fmrMedicoRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPacienteRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fmrMedicoRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPacienteRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fmrMedicoRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPacienteRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fmrMedicoRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPacienteRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fmrMedicoRM().setVisible(true);
+                new frmPacienteRM().setVisible(true);
             }
         });
     }
@@ -280,13 +280,11 @@ public class fmrMedicoRM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtDireccionRM;
     private javax.swing.JTextField txtEdadRM;
-    private javax.swing.JTextField txtEspecialidadRM;
-    private javax.swing.JTextField txtExperienciaRM;
+    private javax.swing.JTextField txtEnfermedadRM;
+    private javax.swing.JTextField txtHistorialRM;
     private javax.swing.JTextField txtNombreRM;
     // End of variables declaration//GEN-END:variables
 }
